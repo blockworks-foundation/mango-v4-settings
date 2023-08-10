@@ -50,7 +50,7 @@ export const LISTING_PRESETS: {
     initAssetWeight: 0.5,
     maintLiabWeight: 1.2,
     initLiabWeight: 1.4,
-    liquidationFee: 0.1,
+    liquidationFee: 0.125,
     netBorrowLimitPerWindowQuote: toNative(20000, 6).toNumber(),
     borrowWeightScale: toNative(50000, 6).toNumber(),
     depositWeightScale: toNative(50000, 6).toNumber(),
@@ -62,13 +62,12 @@ export const LISTING_PRESETS: {
   //Price impact on $5,000 swap lower then 1%
   MEME: {
     ...PREMIUM_LISTING,
-    maxStalenessSlots: 800,
     loanOriginationFeeRate: 0.002,
     maintAssetWeight: 0,
     initAssetWeight: 0,
     maintLiabWeight: 1.25,
     initLiabWeight: 1.5,
-    liquidationFee: 0.125,
+    liquidationFee: 0.2,
     netBorrowLimitPerWindowQuote: toNative(5000, 6).toNumber(),
     borrowWeightScale: toNative(20000, 6).toNumber(),
     depositWeightScale: toNative(20000, 6).toNumber(),
@@ -80,7 +79,6 @@ export const LISTING_PRESETS: {
   //Price impact on $1,000 swap lower then 1%
   SHIT: {
     ...PREMIUM_LISTING,
-    maxStalenessSlots: 800,
     loanOriginationFeeRate: 0.002,
     maintAssetWeight: 0,
     initAssetWeight: 0,
@@ -99,21 +97,21 @@ export const LISTING_PRESETS: {
   UNTRUSTED: {},
 };
 
-export const LISTING_PRESETS_PYTH = {
+export const LISTING_PRESETS_PYTH: typeof LISTING_PRESETS = {
   PREMIUM: {
-    ...LISTING_PRESETS.PREMIUM,
+    ...(LISTING_PRESETS.PREMIUM as ListingPreset),
     maxStalenessSlots: 250,
   },
   MID: {
-    ...LISTING_PRESETS.MID,
+    ...(LISTING_PRESETS.MID as ListingPreset),
     maxStalenessSlots: 250,
   },
   MEME: {
-    ...LISTING_PRESETS.MEME,
+    ...(LISTING_PRESETS.MEME as ListingPreset),
     maxStalenessSlots: 250,
   },
   SHIT: {
-    ...LISTING_PRESETS.SHIT,
+    ...(LISTING_PRESETS.SHIT as ListingPreset),
     maxStalenessSlots: 250,
   },
   UNTRUSTED: {},
@@ -157,7 +155,7 @@ export const calculateMarketTradingParams = (
   basePrice: number,
   quotePrice: number,
   baseDecimals: number,
-  quoteDecimals: number
+  quoteDecimals: number,
 ): MarketTradingParams => {
   const MAX_MIN_ORDER_VALUE = 0.05;
   const MIN_PRICE_INCREMENT_RELATIVE = 0.000025;
@@ -186,7 +184,7 @@ export const calculateMarketTradingParams = (
   do {
     priceIncrement = Math.pow(
       10,
-      quoteLotExponent + baseDecimals - baseLotExponent - quoteDecimals
+      quoteLotExponent + baseDecimals - baseLotExponent - quoteDecimals,
     );
     priceIncrementRelative = (priceIncrement * quotePrice) / basePrice;
     if (priceIncrementRelative > MIN_PRICE_INCREMENT_RELATIVE) {
@@ -207,7 +205,7 @@ export const calculateMarketTradingParams = (
     minOrderValue = basePrice * minOrderSize;
     priceIncrement = Math.pow(
       10,
-      quoteLotExponent + baseDecimals - baseLotExponent - quoteDecimals
+      quoteLotExponent + baseDecimals - baseLotExponent - quoteDecimals,
     );
     priceIncrementRelative = (priceIncrement * quotePrice) / basePrice;
   }
