@@ -31,6 +31,7 @@ const PREMIUM_LISTING = {
   tokenConditionalSwapTakerFeeRate: 0,
   tokenConditionalSwapMakerFeeRate: 0,
   flashLoanDepositFeeRate: 0,
+  reduceOnly: 0,
 };
 
 export type ListingPreset = typeof PREMIUM_LISTING;
