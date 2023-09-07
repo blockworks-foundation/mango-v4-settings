@@ -25,6 +25,12 @@ const PREMIUM_LISTING = {
   preset_key: "PREMIUM",
   preset_name: "Blue chip",
   preset_target_amount: 100000,
+  delayIntervalSeconds: 60 * 60,
+  delayGrowthLimit: 0.06,
+  stableGrowthLimit: 0.0003,
+  tokenConditionalSwapTakerFeeRate: 0,
+  tokenConditionalSwapMakerFeeRate: 0,
+  flashLoanDepositFeeRate: 0,
 };
 
 export type ListingPreset = typeof PREMIUM_LISTING;

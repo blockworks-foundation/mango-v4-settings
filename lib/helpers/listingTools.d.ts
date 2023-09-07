@@ -23,6 +23,12 @@ declare const PREMIUM_LISTING: {
     preset_key: string;
     preset_name: string;
     preset_target_amount: number;
+    delayIntervalSeconds: number;
+    delayGrowthLimit: number;
+    stableGrowthLimit: number;
+    tokenConditionalSwapTakerFeeRate: number;
+    tokenConditionalSwapMakerFeeRate: number;
+    flashLoanDepositFeeRate: number;
 };
 export type ListingPreset = typeof PREMIUM_LISTING;
 export type LISTING_PRESETS_KEYS = "PREMIUM" | "MID" | "MEME" | "SHIT" | "UNTRUSTED";
