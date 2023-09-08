@@ -1,6 +1,6 @@
 {
   "name": "@blockworks-foundation/mango-v4-settings",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
