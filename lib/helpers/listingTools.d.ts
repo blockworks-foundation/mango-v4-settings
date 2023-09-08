@@ -29,6 +29,7 @@ declare const PREMIUM_LISTING: {
     tokenConditionalSwapTakerFeeRate: number;
     tokenConditionalSwapMakerFeeRate: number;
     flashLoanDepositFeeRate: number;
+    reduceOnly: number;
 };
 export type ListingPreset = typeof PREMIUM_LISTING;
 export type LISTING_PRESETS_KEYS = "PREMIUM" | "MID" | "MEME" | "SHIT" | "UNTRUSTED";
