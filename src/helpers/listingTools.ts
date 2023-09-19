@@ -1,7 +1,7 @@
 import BN from "bn.js";
 
 const PREMIUM_LISTING = {
-  maxStalenessSlots: 10000 as number | null,
+  maxStalenessSlots: 10000 as number,
   oracleConfFilter: 0.1,
   adjustmentFactor: 0.004,
   util0: 0.5,
