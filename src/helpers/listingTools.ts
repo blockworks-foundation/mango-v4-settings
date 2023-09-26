@@ -37,6 +37,7 @@ const PREMIUM_LISTING = {
 export type ListingPreset = typeof PREMIUM_LISTING;
 
 export type LISTING_PRESETS_KEYS =
+  | "ULTRA_PREMIUM"
   | "PREMIUM"
   | "MID"
   | "MEME"
@@ -46,6 +47,16 @@ export type LISTING_PRESETS_KEYS =
 export const LISTING_PRESETS: {
   [key in LISTING_PRESETS_KEYS]: ListingPreset | Record<string, never>;
 } = {
+  //Price impact on $250,000 swap lower then 1%
+  ULTRA_PREMIUM: {
+    ...PREMIUM_LISTING,
+    netBorrowLimitPerWindowQuote: toNative(125000, 6).toNumber(),
+    borrowWeightScaleStartQuote: toNative(500000, 6).toNumber(),
+    depositWeightScaleStartQuote: toNative(500000, 6).toNumber(),
+    preset_name: "ULTRA PREMIUM",
+    preset_key: "ULTRA_PREMIUM",
+    preset_target_amount: 250000,
+  },
   //Price impact on $100,000 swap lower then 1%
   PREMIUM: {
     ...PREMIUM_LISTING,
@@ -105,6 +116,10 @@ export const LISTING_PRESETS: {
 };
 
 export const LISTING_PRESETS_PYTH: typeof LISTING_PRESETS = {
+  ULTRA_PREMIUM: {
+    ...(LISTING_PRESETS.ULTRA_PREMIUM as ListingPreset),
+    maxStalenessSlots: 250,
+  },
   PREMIUM: {
     ...(LISTING_PRESETS.PREMIUM as ListingPreset),
     maxStalenessSlots: 250,
@@ -236,6 +251,7 @@ function toNative(uiAmount: number, decimals: number): BN {
 export const coinTiersToNames: {
   [key in LISTING_PRESETS_KEYS]: string;
 } = {
+  ULTRA_PREMIUM: "Ultra Premium",
   PREMIUM: "Blue Chip",
   MID: "Mid-wit",
   MEME: "Meme",
