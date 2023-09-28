@@ -32,7 +32,7 @@ declare const PREMIUM_LISTING: {
     reduceOnly: number;
 };
 export type ListingPreset = typeof PREMIUM_LISTING;
-export type LISTING_PRESETS_KEYS = "PREMIUM" | "MID" | "MEME" | "SHIT" | "UNTRUSTED";
+export type LISTING_PRESETS_KEYS = "ULTRA_PREMIUM" | "PREMIUM" | "MID" | "MEME" | "SHIT" | "UNTRUSTED";
 export declare const LISTING_PRESETS: {
     [key in LISTING_PRESETS_KEYS]: ListingPreset | Record<string, never>;
 };
