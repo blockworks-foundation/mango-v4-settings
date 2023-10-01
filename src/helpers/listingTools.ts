@@ -258,3 +258,16 @@ export const coinTiersToNames: {
   SHIT: "Shit Coin",
   UNTRUSTED: "Untrusted",
 };
+
+export const getTierWithAdjustedNetBorrows = (
+  tier: ListingPreset,
+  currentTotalDepositsInUsdc: number,
+): ListingPreset => {
+  const newNetBorrowLimitPerWindowQuote =
+    Math.round(currentTotalDepositsInUsdc / 1_000_000_000) * 1_000_000_000;
+
+  return {
+    ...tier,
+    netBorrowLimitPerWindowQuote: newNetBorrowLimitPerWindowQuote,
+  };
+};
