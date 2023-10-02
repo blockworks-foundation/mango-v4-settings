@@ -264,10 +264,14 @@ export const getTierWithAdjustedNetBorrows = (
   currentTotalDepositsInUsdc: number,
 ): ListingPreset => {
   const newNetBorrowLimitPerWindowQuote =
-    Math.round(currentTotalDepositsInUsdc / 1_000_000_000) * 1_000_000_000;
+    Math.round(currentTotalDepositsInUsdc / 3 / 1_000_000_000) * 1_000_000_000;
+  const minValue = toNative(10000, 6).toNumber();
 
   return {
     ...tier,
-    netBorrowLimitPerWindowQuote: newNetBorrowLimitPerWindowQuote,
+    netBorrowLimitPerWindowQuote:
+      newNetBorrowLimitPerWindowQuote < minValue
+        ? minValue
+        : newNetBorrowLimitPerWindowQuote,
   };
 };
