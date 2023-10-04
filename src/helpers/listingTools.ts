@@ -275,3 +275,69 @@ export const getTierWithAdjustedNetBorrows = (
         : newNetBorrowLimitPerWindowQuote,
   };
 };
+
+export const getMidPriceImpacts = (priceImpacts: PriceImpact[]) => {
+  return priceImpacts.reduce((acc: MidPriceImpact[], val: PriceImpact) => {
+    if (val.side === "ask") {
+      const bidSide = priceImpacts.find(
+        (x) =>
+          x.symbol === val.symbol &&
+          x.target_amount === val.target_amount &&
+          x.side === "bid",
+      );
+      acc.push({
+        target_amount: val.target_amount,
+        avg_price_impact_percent: bidSide
+          ? (bidSide.avg_price_impact_percent + val.avg_price_impact_percent) /
+            2
+          : val.avg_price_impact_percent,
+        symbol: val.symbol,
+      });
+    }
+    return acc;
+  }, []);
+};
+
+export const getLiquidityTier = (
+  presets: typeof LISTING_PRESETS,
+  priceImpactTargetAmount: number,
+): LISTING_PRESETS_KEYS => {
+  return (Object.values(presets).find(
+    (x) => x.preset_target_amount === priceImpactTargetAmount,
+  )?.preset_key || "SHIT") as LISTING_PRESETS_KEYS;
+};
+
+export const getProposedTier = (
+  presets: typeof LISTING_PRESETS,
+  priceImpactTargetAmount: number,
+  isPyth: boolean,
+): LISTING_PRESETS_KEYS => {
+  const liquidityTier = getLiquidityTier(presets, priceImpactTargetAmount);
+  const detieredTierWithoutPyth =
+    liquidityTier === "ULTRA_PREMIUM" || liquidityTier === "PREMIUM"
+      ? "MID"
+      : liquidityTier === "MID"
+      ? "MEME"
+      : liquidityTier;
+  const isPythRecommended =
+    liquidityTier === "MID" ||
+    liquidityTier === "PREMIUM" ||
+    liquidityTier === "ULTRA_PREMIUM";
+  const proposedTier =
+    isPythRecommended && isPyth ? detieredTierWithoutPyth : liquidityTier;
+  return proposedTier;
+};
+
+export type PriceImpact = {
+  symbol: string;
+  side: "bid" | "ask";
+  target_amount: number;
+  avg_price_impact_percent: number;
+  min_price_impact_percent: number;
+  max_price_impact_percent: number;
+};
+
+export type MidPriceImpact = Omit<
+  PriceImpact,
+  "side" | "min_price_impact_percent" | "max_price_impact_percent"
+>;
