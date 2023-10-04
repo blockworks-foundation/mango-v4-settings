@@ -52,4 +52,16 @@ export declare const coinTiersToNames: {
     [key in LISTING_PRESETS_KEYS]: string;
 };
 export declare const getTierWithAdjustedNetBorrows: (tier: ListingPreset, currentTotalDepositsInUsdc: number) => ListingPreset;
+export declare const getMidPriceImpacts: (priceImpacts: PriceImpact[]) => MidPriceImpact[];
+export declare const getLiquidityTier: (presets: typeof LISTING_PRESETS, priceImpactTargetAmount: number) => LISTING_PRESETS_KEYS;
+export declare const getProposedTier: (presets: typeof LISTING_PRESETS, priceImpactTargetAmount: number, isPyth: boolean) => LISTING_PRESETS_KEYS;
+export type PriceImpact = {
+    symbol: string;
+    side: "bid" | "ask";
+    target_amount: number;
+    avg_price_impact_percent: number;
+    min_price_impact_percent: number;
+    max_price_impact_percent: number;
+};
+export type MidPriceImpact = Omit<PriceImpact, "side" | "min_price_impact_percent" | "max_price_impact_percent">;
 export {};
