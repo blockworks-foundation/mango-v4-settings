@@ -54,7 +54,7 @@ export declare const coinTiersToNames: {
 export declare const getTierWithAdjustedNetBorrows: (tier: ListingPreset, currentTotalDepositsInUsdc: number) => ListingPreset;
 export declare const getMidPriceImpacts: (priceImpacts: PriceImpact[]) => MidPriceImpact[];
 export declare const getLiquidityTier: (presets: typeof LISTING_PRESETS, priceImpactTargetAmount: number) => LISTING_PRESETS_KEYS;
-export declare const getProposedTier: (presets: typeof LISTING_PRESETS, priceImpactTargetAmount: number, isPyth: boolean) => LISTING_PRESETS_KEYS;
+export declare const getProposedTier: (presets: typeof LISTING_PRESETS, priceImpactTargetAmount: number, isPythOracle: boolean) => LISTING_PRESETS_KEYS;
 export type PriceImpact = {
     symbol: string;
     side: "bid" | "ask";
