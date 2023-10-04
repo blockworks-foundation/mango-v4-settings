@@ -310,7 +310,7 @@ export const getLiquidityTier = (
 export const getProposedTier = (
   presets: typeof LISTING_PRESETS,
   priceImpactTargetAmount: number,
-  isPyth: boolean,
+  isPythOracle: boolean,
 ): LISTING_PRESETS_KEYS => {
   const liquidityTier = getLiquidityTier(presets, priceImpactTargetAmount);
   const detieredTierWithoutPyth =
@@ -324,7 +324,9 @@ export const getProposedTier = (
     liquidityTier === "PREMIUM" ||
     liquidityTier === "ULTRA_PREMIUM";
   const proposedTier =
-    isPythRecommended && isPyth ? detieredTierWithoutPyth : liquidityTier;
+    isPythRecommended && !isPythOracle
+      ? detieredTierWithoutPyth
+      : liquidityTier;
   return proposedTier;
 };
 
