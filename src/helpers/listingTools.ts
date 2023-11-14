@@ -302,9 +302,10 @@ export const getLiquidityTier = (
   presets: typeof LISTING_PRESETS,
   priceImpactTargetAmount: number,
 ): LISTING_PRESETS_KEYS => {
-  return (Object.values(presets).find(
-    (x) => x.preset_target_amount === priceImpactTargetAmount,
-  )?.preset_key || "SHIT") as LISTING_PRESETS_KEYS;
+  return (Object.values(presets)
+    .sort((a, b) => b.preset_target_amount - a.preset_target_amount)
+    .find((x) => x.preset_target_amount <= priceImpactTargetAmount)
+    ?.preset_key || "SHIT") as LISTING_PRESETS_KEYS;
 };
 
 export const getProposedTier = (
