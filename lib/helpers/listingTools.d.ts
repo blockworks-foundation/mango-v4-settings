@@ -28,7 +28,7 @@ declare const PREMIUM_LISTING: {
     stablePriceDelayGrowthLimit: number;
     tokenConditionalSwapTakerFeeRate: number;
     tokenConditionalSwapMakerFeeRate: number;
-    flashLoanDepositFeeRate: number;
+    flashLoanSwapFeeRate: number;
     reduceOnly: number;
 };
 export type ListingPreset = typeof PREMIUM_LISTING;
