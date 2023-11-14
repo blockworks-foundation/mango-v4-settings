@@ -30,7 +30,7 @@ const PREMIUM_LISTING = {
   stablePriceDelayGrowthLimit: 0.06,
   tokenConditionalSwapTakerFeeRate: 0,
   tokenConditionalSwapMakerFeeRate: 0,
-  flashLoanDepositFeeRate: 0,
+  flashLoanSwapFeeRate: 0,
   reduceOnly: 0,
 };
 
