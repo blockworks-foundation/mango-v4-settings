@@ -112,6 +112,7 @@ export const LISTING_PRESETS: {
     preset_target_amount: 1000,
     reduceOnly: 2,
     maxStalenessSlots: null,
+    oracleConfFilter: Number.MAX_SAFE_INTEGER,
   },
   //should run untrusted instruction
   UNTRUSTED: {},
