@@ -93,7 +93,6 @@ export const LISTING_PRESETS: {
     preset_name: "Meme Coin",
     preset_key: "MEME",
     preset_target_amount: 5000,
-    reduceOnly: 2,
   },
   //Price impact on $1,000 swap lower then 1%
   SHIT: {
@@ -112,6 +111,7 @@ export const LISTING_PRESETS: {
     preset_key: "SHIT",
     preset_target_amount: 1000,
     reduceOnly: 2,
+    maxStalenessSlots: -1,
   },
   //should run untrusted instruction
   UNTRUSTED: {},
@@ -136,7 +136,6 @@ export const LISTING_PRESETS_PYTH: typeof LISTING_PRESETS = {
   },
   SHIT: {
     ...(LISTING_PRESETS.SHIT as ListingPreset),
-    maxStalenessSlots: 250,
   },
   UNTRUSTED: {},
 };
