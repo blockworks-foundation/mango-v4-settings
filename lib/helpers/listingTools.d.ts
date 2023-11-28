@@ -1,5 +1,5 @@
 declare const PREMIUM_LISTING: {
-    maxStalenessSlots: number;
+    maxStalenessSlots: number | null;
     oracleConfFilter: number;
     adjustmentFactor: number;
     util0: number;

@@ -1,7 +1,7 @@
 import BN from "bn.js";
 
 const PREMIUM_LISTING = {
-  maxStalenessSlots: 10000,
+  maxStalenessSlots: 10000 as number | null,
   oracleConfFilter: 0.1,
   adjustmentFactor: 0.004,
   util0: 0.5,
@@ -111,7 +111,7 @@ export const LISTING_PRESETS: {
     preset_key: "SHIT",
     preset_target_amount: 1000,
     reduceOnly: 2,
-    maxStalenessSlots: -1,
+    maxStalenessSlots: null,
   },
   //should run untrusted instruction
   UNTRUSTED: {},
