@@ -1,7 +1,7 @@
 import BN from "bn.js";
 
 const PREMIUM_LISTING = {
-  maxStalenessSlots: 10000 as number | null,
+  maxStalenessSlots: 250 as number | null,
   oracleConfFilter: 0.1,
   adjustmentFactor: 0.004,
   util0: 0.5,
@@ -23,7 +23,7 @@ const PREMIUM_LISTING = {
   borrowWeightScaleStartQuote: toNative(250000, 6).toNumber(),
   depositWeightScaleStartQuote: toNative(250000, 6).toNumber(),
   preset_key: "PREMIUM",
-  preset_name: "Blue chip",
+  preset_name: "AA",
   preset_target_amount: 100000,
   stablePriceDelayIntervalSeconds: 60 * 60,
   stablePriceGrowthLimit: 0.0003,
@@ -53,7 +53,7 @@ export const LISTING_PRESETS: {
     netBorrowLimitPerWindowQuote: toNative(125000, 6).toNumber(),
     borrowWeightScaleStartQuote: toNative(500000, 6).toNumber(),
     depositWeightScaleStartQuote: toNative(500000, 6).toNumber(),
-    preset_name: "ULTRA PREMIUM",
+    preset_name: "AAA",
     preset_key: "ULTRA_PREMIUM",
     preset_target_amount: 250000,
   },
@@ -69,11 +69,12 @@ export const LISTING_PRESETS: {
     maintLiabWeight: 1.2,
     initLiabWeight: 1.4,
     liquidationFee: 0.125,
+    loanFeeRate: 0.01,
     netBorrowLimitPerWindowQuote: toNative(20000, 6).toNumber(),
     borrowWeightScaleStartQuote: toNative(50000, 6).toNumber(),
     depositWeightScaleStartQuote: toNative(50000, 6).toNumber(),
     insuranceFound: false,
-    preset_name: "Midwit",
+    preset_name: "A",
     preset_key: "MID",
     preset_target_amount: 20000,
   },
@@ -83,6 +84,7 @@ export const LISTING_PRESETS: {
     loanOriginationFeeRate: 0.002,
     maintAssetWeight: 0,
     initAssetWeight: 0,
+    loanFeeRate: 0.02,
     maintLiabWeight: 1.25,
     initLiabWeight: 1.5,
     liquidationFee: 0.2,
@@ -90,16 +92,17 @@ export const LISTING_PRESETS: {
     borrowWeightScaleStartQuote: toNative(20000, 6).toNumber(),
     depositWeightScaleStartQuote: toNative(20000, 6).toNumber(),
     insuranceFound: false,
-    preset_name: "Meme Coin",
+    preset_name: "BBB",
     preset_key: "MEME",
     preset_target_amount: 5000,
   },
   //Price impact on $1,000 swap lower then 1%
   SHIT: {
     ...PREMIUM_LISTING,
-    loanOriginationFeeRate: 0.002,
+    loanOriginationFeeRate: 0.004,
     maintAssetWeight: 0,
     initAssetWeight: 0,
+    loanFeeRate: 0.05,
     maintLiabWeight: 1.4,
     initLiabWeight: 1.8,
     liquidationFee: 0.2,
@@ -107,14 +110,14 @@ export const LISTING_PRESETS: {
     borrowWeightScaleStartQuote: toNative(5000, 6).toNumber(),
     depositWeightScaleStartQuote: toNative(5000, 6).toNumber(),
     insuranceFound: false,
-    preset_name: "Shit Coin",
+    preset_name: "BB",
     preset_key: "SHIT",
     preset_target_amount: 1000,
     reduceOnly: 2,
     maxStalenessSlots: null,
     oracleConfFilter: Number.MAX_SAFE_INTEGER,
   },
-  //should run untrusted instruction
+  //should run untrusted, instruction preset should be named C
   UNTRUSTED: {},
 };
 
@@ -253,12 +256,12 @@ function toNative(uiAmount: number, decimals: number): BN {
 export const coinTiersToNames: {
   [key in LISTING_PRESETS_KEYS]: string;
 } = {
-  ULTRA_PREMIUM: "Ultra Premium",
-  PREMIUM: "Blue Chip",
-  MID: "Mid-wit",
-  MEME: "Meme",
-  SHIT: "Shit Coin",
-  UNTRUSTED: "Untrusted",
+  ULTRA_PREMIUM: "AAA",
+  PREMIUM: "AA",
+  MID: "A",
+  MEME: "BBB",
+  SHIT: "BB",
+  UNTRUSTED: "C",
 };
 
 export const getTierWithAdjustedNetBorrows = (
