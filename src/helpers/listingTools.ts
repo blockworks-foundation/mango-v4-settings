@@ -115,7 +115,7 @@ export const LISTING_PRESETS: {
     preset_key: "SHIT",
     preset_target_amount: 1000,
     maxStalenessSlots: 1000,
-    oracleConfFilter: Number.MAX_SAFE_INTEGER,
+    oracleConfFilter: 1000,
   },
   //should run untrusted, instruction preset should be named C
   UNTRUSTED: {},
