@@ -35,6 +35,7 @@ const PREMIUM_LISTING = {
   interestCurveScaling: 4.0,
   interestTargetUtilization: 0.5,
   depositLimit: 0,
+  oraclePriceBand: 0.5,
 };
 
 export type ListingPreset = typeof PREMIUM_LISTING;
