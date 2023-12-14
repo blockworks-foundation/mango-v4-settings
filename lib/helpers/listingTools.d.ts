@@ -17,7 +17,7 @@ declare const PREMIUM_LISTING: {
     minVaultToDepositsRatio: number;
     netBorrowLimitWindowSizeTs: number;
     netBorrowLimitPerWindowQuote: number;
-    insuranceFound: boolean;
+    groupInsuranceFund: boolean;
     borrowWeightScaleStartQuote: number;
     depositWeightScaleStartQuote: number;
     preset_key: string;
