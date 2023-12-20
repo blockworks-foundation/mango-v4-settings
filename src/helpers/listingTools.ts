@@ -267,8 +267,8 @@ export const coinTiersToNames: {
   ULTRA_PREMIUM: "AAA",
   PREMIUM: "AA",
   MID: "A",
-  MEME: "BBB",
-  SHIT: "BB",
+  MEME: "BB",
+  SHIT: "B",
   UNTRUSTED: "C",
 };
 
