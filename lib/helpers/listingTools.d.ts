@@ -1,4 +1,10 @@
-declare const PREMIUM_LISTING: {
+declare enum ORACLE_TYPE {
+    PYTH = 0,
+    SWITCHBOARD = 1,
+    ALL = 2
+}
+export type LISTING_PRESETS_KEY = "asset_250p" | "asset_100" | "asset_20" | "asset_10p" | "liab_5p" | "liab_5" | "liab_1" | "UNTRUSTED";
+declare const asset_250p: {
     maxStalenessSlots: number | null;
     oracleConfFilter: number;
     adjustmentFactor: number;
@@ -20,7 +26,7 @@ declare const PREMIUM_LISTING: {
     groupInsuranceFund: boolean;
     borrowWeightScaleStartQuote: number;
     depositWeightScaleStartQuote: number;
-    preset_key: string;
+    preset_key: LISTING_PRESETS_KEY;
     preset_name: string;
     preset_target_amount: number;
     stablePriceDelayIntervalSeconds: number;
@@ -34,13 +40,14 @@ declare const PREMIUM_LISTING: {
     interestTargetUtilization: number;
     depositLimit: number;
     oraclePriceBand: number;
+    depositLimitNotional: number;
+    oracle: ORACLE_TYPE;
 };
-export type ListingPreset = typeof PREMIUM_LISTING;
-export type LISTING_PRESETS_KEYS = "ULTRA_PREMIUM" | "PREMIUM" | "MID" | "MEME" | "SHIT" | "UNTRUSTED";
+export type LISTING_PRESET = typeof asset_250p;
+export type ILISTING_PRESETS = typeof LISTING_PRESETS;
 export declare const LISTING_PRESETS: {
-    [key in LISTING_PRESETS_KEYS]: ListingPreset | Record<string, never>;
+    [key in LISTING_PRESETS_KEY]: LISTING_PRESET;
 };
-export declare const LISTING_PRESETS_PYTH: typeof LISTING_PRESETS;
 export type MarketTradingParams = {
     baseLots: number;
     quoteLots: number;
@@ -53,12 +60,16 @@ export type MarketTradingParams = {
 };
 export declare const calculateMarketTradingParams: (basePrice: number, quotePrice: number, baseDecimals: number, quoteDecimals: number) => MarketTradingParams;
 export declare const coinTiersToNames: {
-    [key in LISTING_PRESETS_KEYS]: string;
+    [key in LISTING_PRESETS_KEY]: string;
 };
-export declare const getTierWithAdjustedNetBorrows: (tier: ListingPreset, currentTotalDepositsInUsdc: number) => ListingPreset;
+export declare const getPresetWithAdjustedNetBorrows: (tier: LISTING_PRESET, currentTotalDepositsInUsdc: number) => LISTING_PRESET;
 export declare const getMidPriceImpacts: (priceImpacts: PriceImpact[]) => MidPriceImpact[];
-export declare const getLiquidityTier: (presets: typeof LISTING_PRESETS, priceImpactTargetAmount: number) => LISTING_PRESETS_KEYS;
-export declare const getProposedTier: (presets: typeof LISTING_PRESETS, priceImpactTargetAmount: number | undefined, isPythOracle: boolean) => LISTING_PRESETS_KEYS;
+export declare const getKeyForPriceImpact: (presets: ILISTING_PRESETS, priceImpactTargetAmount: number) => LISTING_PRESETS_KEY;
+export declare const getProposedKey: (priceImpactTargetAmount: number | undefined, isPythOracle: boolean) => LISTING_PRESETS_KEY;
+export declare const getProposedPreset: (priceImpactTargetAmount: number | undefined, isPythOracle: boolean) => LISTING_PRESET;
+export declare const getPresetWithAdjustedDepositLimit: (tier: LISTING_PRESET, tokenPrice: number) => LISTING_PRESET;
+export declare function getSwitchBoardPresets(presets: ILISTING_PRESETS): ILISTING_PRESETS;
+export declare function getPythPresets(presets: ILISTING_PRESETS): ILISTING_PRESETS;
 export type PriceImpact = {
     symbol: string;
     side: "bid" | "ask";
