@@ -196,7 +196,7 @@ export const LISTING_PRESETS: {
     groupInsuranceFund: false,
     preset_name: "C",
     preset_key: "UNTRUSTED",
-    preset_target_amount: 1000,
+    preset_target_amount: 0,
     maxStalenessSlots: 1000,
     oracleConfFilter: 1000,
     depositLimitNotional: 200000,
