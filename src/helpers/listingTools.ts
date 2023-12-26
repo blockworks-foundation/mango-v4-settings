@@ -1,6 +1,22 @@
 import BN from "bn.js";
 
-const PREMIUM_LISTING = {
+enum ORACLE_TYPE {
+  PYTH,
+  SWITCHBOARD,
+  ALL,
+}
+
+export type LISTING_PRESETS_KEY =
+  | "asset_250p"
+  | "asset_100"
+  | "asset_20"
+  | "asset_10p"
+  | "liab_5p"
+  | "liab_5"
+  | "liab_1"
+  | "UNTRUSTED";
+
+const asset_250p = {
   maxStalenessSlots: 250 as number | null,
   oracleConfFilter: 0.1,
   adjustmentFactor: 0.004,
@@ -9,8 +25,8 @@ const PREMIUM_LISTING = {
   util1: 0.75,
   rate1: 0.05,
   maxRate: 0.5,
-  loanFeeRate: 0.01,
-  loanOriginationFeeRate: 0.001,
+  loanFeeRate: 0.005,
+  loanOriginationFeeRate: 0.0005,
   maintAssetWeight: 0.9,
   initAssetWeight: 0.8,
   maintLiabWeight: 1.1,
@@ -18,13 +34,13 @@ const PREMIUM_LISTING = {
   liquidationFee: 0.05,
   minVaultToDepositsRatio: 0.2,
   netBorrowLimitWindowSizeTs: 24 * 60 * 60,
-  netBorrowLimitPerWindowQuote: toNative(50000, 6).toNumber(),
+  netBorrowLimitPerWindowQuote: toNative(250000, 6).toNumber(),
   groupInsuranceFund: true,
-  borrowWeightScaleStartQuote: toNative(250000, 6).toNumber(),
-  depositWeightScaleStartQuote: toNative(250000, 6).toNumber(),
-  preset_key: "PREMIUM",
-  preset_name: "AA",
-  preset_target_amount: 100000,
+  borrowWeightScaleStartQuote: toNative(500000, 6).toNumber(),
+  depositWeightScaleStartQuote: toNative(500000, 6).toNumber(),
+  preset_key: "asset_250p" as LISTING_PRESETS_KEY,
+  preset_name: "AAA",
+  preset_target_amount: 250000,
   stablePriceDelayIntervalSeconds: 60 * 60,
   stablePriceGrowthLimit: 0.0003,
   stablePriceDelayGrowthLimit: 0.06,
@@ -36,78 +52,115 @@ const PREMIUM_LISTING = {
   interestTargetUtilization: 0.5,
   depositLimit: 0,
   oraclePriceBand: 0.5,
+  depositLimitNotional: 2000000,
+  oracle: ORACLE_TYPE.PYTH,
 };
 
-export type ListingPreset = typeof PREMIUM_LISTING;
-
-export type LISTING_PRESETS_KEYS =
-  | "ULTRA_PREMIUM"
-  | "PREMIUM"
-  | "MID"
-  | "MEME"
-  | "SHIT"
-  | "UNTRUSTED";
+export type LISTING_PRESET = typeof asset_250p;
+export type ILISTING_PRESETS = typeof LISTING_PRESETS;
 
 export const LISTING_PRESETS: {
-  [key in LISTING_PRESETS_KEYS]: ListingPreset | Record<string, never>;
+  [key in LISTING_PRESETS_KEY]: LISTING_PRESET;
 } = {
   //Price impact on $250,000 swap lower then 1%
-  ULTRA_PREMIUM: {
-    ...PREMIUM_LISTING,
-    netBorrowLimitPerWindowQuote: toNative(125000, 6).toNumber(),
-    borrowWeightScaleStartQuote: toNative(500000, 6).toNumber(),
-    depositWeightScaleStartQuote: toNative(500000, 6).toNumber(),
-    preset_name: "AAA",
-    preset_key: "ULTRA_PREMIUM",
-    preset_target_amount: 250000,
-    loanFeeRate: 0.0005,
-    loanOriginationFeeRate: 0.0005,
+  asset_250p: {
+    ...asset_250p,
   },
   //Price impact on $100,000 swap lower then 1%
-  PREMIUM: {
-    ...PREMIUM_LISTING,
+  asset_100: {
+    ...asset_250p,
+    netBorrowLimitPerWindowQuote: toNative(125000, 6).toNumber(),
+    borrowWeightScaleStartQuote: toNative(250000, 6).toNumber(),
+    depositWeightScaleStartQuote: toNative(250000, 6).toNumber(),
+    preset_name: "AA",
+    preset_key: "asset_100",
+    preset_target_amount: 100000,
+    loanFeeRate: 0.01,
+    loanOriginationFeeRate: 0.001,
+    oracle: ORACLE_TYPE.ALL,
+    depositLimitNotional: 1000000,
   },
   //Price impact on $20,000 swap lower then 1%
-  MID: {
-    ...PREMIUM_LISTING,
+  asset_20: {
+    ...asset_250p,
     maintAssetWeight: 0.75,
     initAssetWeight: 0.5,
     maintLiabWeight: 1.2,
     initLiabWeight: 1.4,
     liquidationFee: 0.1,
     loanFeeRate: 0.02,
-    netBorrowLimitPerWindowQuote: toNative(20000, 6).toNumber(),
+    netBorrowLimitPerWindowQuote: toNative(50000, 6).toNumber(),
     borrowWeightScaleStartQuote: toNative(50000, 6).toNumber(),
     depositWeightScaleStartQuote: toNative(50000, 6).toNumber(),
-    groupInsuranceFund: true,
     preset_name: "A",
-    preset_key: "MID",
+    preset_key: "asset_20",
     preset_target_amount: 20000,
     loanOriginationFeeRate: 0.002,
+    oracle: ORACLE_TYPE.ALL,
+    depositLimitNotional: 200000,
   },
-  //Price impact on $5,000 swap lower then 1%
-  MEME: {
-    ...PREMIUM_LISTING,
+  asset_10p: {
+    ...asset_250p,
+    maintAssetWeight: 0.5,
+    initAssetWeight: 0.25,
+    maintLiabWeight: 1.25,
+    initLiabWeight: 1.5,
+    liquidationFee: 0.1,
+    loanFeeRate: 0.03,
+    netBorrowLimitPerWindowQuote: toNative(50000, 6).toNumber(),
+    borrowWeightScaleStartQuote: toNative(20000, 6).toNumber(),
+    depositWeightScaleStartQuote: toNative(20000, 6).toNumber(),
+    groupInsuranceFund: false,
+    preset_name: "A-",
+    preset_key: "asset_10p",
+    preset_target_amount: 10000,
+    loanOriginationFeeRate: 0.003,
+    oracle: ORACLE_TYPE.PYTH,
+    depositLimitNotional: 80000,
+  },
+  liab_5p: {
+    ...asset_250p,
+    loanOriginationFeeRate: 0.004,
+    maintAssetWeight: 0,
+    initAssetWeight: 0,
+    loanFeeRate: 0.04,
+    maintLiabWeight: 1.25,
+    initLiabWeight: 1.5,
+    liquidationFee: 0.1,
+    netBorrowLimitPerWindowQuote: toNative(50000, 6).toNumber(),
+    borrowWeightScaleStartQuote: toNative(20000, 6).toNumber(),
+    depositWeightScaleStartQuote: toNative(20000, 6).toNumber(),
+    groupInsuranceFund: false,
+    preset_name: "BBB",
+    preset_key: "liab_5p",
+    preset_target_amount: 5000,
+    oracle: ORACLE_TYPE.PYTH,
+    depositLimitNotional: 200000,
+  },
+  //Price impact on $1,000 swap lower then 1%
+  liab_5: {
+    ...asset_250p,
+    loanFeeRate: 0.05,
     loanOriginationFeeRate: 0.005,
     maintAssetWeight: 0,
     initAssetWeight: 0,
-    loanFeeRate: 0.05,
     maintLiabWeight: 1.3,
     initLiabWeight: 1.6,
     liquidationFee: 0.1,
-    netBorrowLimitPerWindowQuote: toNative(5000, 6).toNumber(),
+    netBorrowLimitPerWindowQuote: toNative(50000, 6).toNumber(),
     borrowWeightScaleStartQuote: toNative(20000, 6).toNumber(),
     depositWeightScaleStartQuote: toNative(20000, 6).toNumber(),
     groupInsuranceFund: false,
     preset_name: "BB",
-    preset_key: "MEME",
+    preset_key: "liab_5",
     preset_target_amount: 5000,
     maxStalenessSlots: 1000,
     oracleConfFilter: 1000,
+    oracle: ORACLE_TYPE.ALL,
+    depositLimitNotional: 200000,
   },
-  //Price impact on $1,000 swap lower then 1%
-  SHIT: {
-    ...PREMIUM_LISTING,
+  liab_1: {
+    ...asset_250p,
     loanFeeRate: 0.075,
     loanOriginationFeeRate: 0.0075,
     maintAssetWeight: 0,
@@ -115,41 +168,40 @@ export const LISTING_PRESETS: {
     maintLiabWeight: 1.4,
     initLiabWeight: 1.8,
     liquidationFee: 0.1,
-    netBorrowLimitPerWindowQuote: toNative(5000, 6).toNumber(),
-    borrowWeightScaleStartQuote: toNative(20000, 6).toNumber(),
-    depositWeightScaleStartQuote: toNative(20000, 6).toNumber(),
+    netBorrowLimitPerWindowQuote: toNative(15000, 6).toNumber(),
+    borrowWeightScaleStartQuote: toNative(5000, 6).toNumber(),
+    depositWeightScaleStartQuote: toNative(5000, 6).toNumber(),
     groupInsuranceFund: false,
     preset_name: "B",
-    preset_key: "SHIT",
+    preset_key: "liab_1",
     preset_target_amount: 1000,
-    maxStalenessSlots: 10000,
+    maxStalenessSlots: 1000,
     oracleConfFilter: 1000,
+    oracle: ORACLE_TYPE.ALL,
+    depositLimitNotional: 200000,
   },
   //should run untrusted, instruction preset should be named C
-  UNTRUSTED: {},
-};
-
-export const LISTING_PRESETS_PYTH: typeof LISTING_PRESETS = {
-  ULTRA_PREMIUM: {
-    ...(LISTING_PRESETS.ULTRA_PREMIUM as ListingPreset),
-    maxStalenessSlots: 250,
+  UNTRUSTED: {
+    ...asset_250p,
+    loanFeeRate: 0.075,
+    loanOriginationFeeRate: 0.0075,
+    maintAssetWeight: 0,
+    initAssetWeight: 0,
+    maintLiabWeight: 1.4,
+    initLiabWeight: 1.8,
+    liquidationFee: 0.2,
+    netBorrowLimitPerWindowQuote: toNative(5000, 6).toNumber(),
+    borrowWeightScaleStartQuote: toNative(5000, 6).toNumber(),
+    depositWeightScaleStartQuote: toNative(5000, 6).toNumber(),
+    groupInsuranceFund: false,
+    preset_name: "C",
+    preset_key: "UNTRUSTED",
+    preset_target_amount: 1000,
+    maxStalenessSlots: 1000,
+    oracleConfFilter: 1000,
+    depositLimitNotional: 200000,
+    oracle: ORACLE_TYPE.ALL,
   },
-  PREMIUM: {
-    ...(LISTING_PRESETS.PREMIUM as ListingPreset),
-    maxStalenessSlots: 250,
-  },
-  MID: {
-    ...(LISTING_PRESETS.MID as ListingPreset),
-    maxStalenessSlots: 250,
-  },
-  MEME: {
-    ...(LISTING_PRESETS.MEME as ListingPreset),
-    maxStalenessSlots: 250,
-  },
-  SHIT: {
-    ...(LISTING_PRESETS.SHIT as ListingPreset),
-  },
-  UNTRUSTED: {},
 };
 
 export type MarketTradingParams = {
@@ -262,20 +314,22 @@ function toNative(uiAmount: number, decimals: number): BN {
 }
 
 export const coinTiersToNames: {
-  [key in LISTING_PRESETS_KEYS]: string;
+  [key in LISTING_PRESETS_KEY]: string;
 } = {
-  ULTRA_PREMIUM: "AAA",
-  PREMIUM: "AA",
-  MID: "A",
-  MEME: "BB",
-  SHIT: "B",
+  asset_250p: "AAA",
+  asset_100: "AA",
+  asset_20: "A",
+  asset_10p: "A-",
+  liab_5p: "BBB",
+  liab_5: "BB",
+  liab_1: "B",
   UNTRUSTED: "C",
 };
 
-export const getTierWithAdjustedNetBorrows = (
-  tier: ListingPreset,
+export const getPresetWithAdjustedNetBorrows = (
+  tier: LISTING_PRESET,
   currentTotalDepositsInUsdc: number,
-): ListingPreset => {
+): LISTING_PRESET => {
   const newNetBorrowLimitPerWindowQuote =
     Math.round(currentTotalDepositsInUsdc / 3 / 1_000_000_000) * 1_000_000_000;
   const minValue = toNative(10000, 6).toNumber();
@@ -311,41 +365,73 @@ export const getMidPriceImpacts = (priceImpacts: PriceImpact[]) => {
   }, []);
 };
 
-export const getLiquidityTier = (
-  presets: typeof LISTING_PRESETS,
+export const getKeyForPriceImpact = (
+  presets: ILISTING_PRESETS,
   priceImpactTargetAmount: number,
-): LISTING_PRESETS_KEYS => {
+): LISTING_PRESETS_KEY => {
   return (Object.values(presets)
     .sort((a, b) => b.preset_target_amount - a.preset_target_amount)
     .find((x) => x.preset_target_amount <= priceImpactTargetAmount)
-    ?.preset_key || "SHIT") as LISTING_PRESETS_KEYS;
+    ?.preset_key || "UNTRUSTED") as LISTING_PRESETS_KEY;
 };
 
-export const getProposedTier = (
-  presets: typeof LISTING_PRESETS,
+export const getProposedKey = (
   priceImpactTargetAmount: number | undefined,
   isPythOracle: boolean,
-): LISTING_PRESETS_KEYS => {
+): LISTING_PRESETS_KEY => {
+  const filtredPresets = isPythOracle
+    ? getPythPresets(LISTING_PRESETS)
+    : getSwitchBoardPresets(LISTING_PRESETS);
   const liquidityTier =
     priceImpactTargetAmount !== undefined
-      ? getLiquidityTier(presets, priceImpactTargetAmount)
-      : "SHIT";
-  const detieredTierWithoutPyth =
-    liquidityTier === "ULTRA_PREMIUM" || liquidityTier === "PREMIUM"
-      ? "MID"
-      : liquidityTier === "MID"
-      ? "MEME"
-      : liquidityTier;
-  const isPythRecommended =
-    liquidityTier === "MID" ||
-    liquidityTier === "PREMIUM" ||
-    liquidityTier === "ULTRA_PREMIUM";
-  const proposedTier =
-    isPythRecommended && !isPythOracle
-      ? detieredTierWithoutPyth
-      : liquidityTier;
-  return proposedTier;
+      ? getKeyForPriceImpact(filtredPresets, priceImpactTargetAmount)
+      : "UNTRUSTED";
+
+  return liquidityTier;
 };
+
+export const getProposedPreset = (
+  priceImpactTargetAmount: number | undefined,
+  isPythOracle: boolean,
+): LISTING_PRESET => {
+  return LISTING_PRESETS[getProposedKey(priceImpactTargetAmount, isPythOracle)];
+};
+
+export const getPresetWithAdjustedDepositLimit = (
+  tier: LISTING_PRESET,
+  tokenPrice: number,
+): LISTING_PRESET => {
+  return {
+    ...tier,
+    depositLimit: Math.ceil(tier.depositLimitNotional / tokenPrice),
+  };
+};
+
+export function getSwitchBoardPresets(
+  presets: ILISTING_PRESETS,
+): ILISTING_PRESETS {
+  const filteredPresets = {} as ILISTING_PRESETS;
+
+  for (const [key, preset] of Object.entries(presets)) {
+    if (preset.oracle !== ORACLE_TYPE.PYTH) {
+      filteredPresets[key as keyof ILISTING_PRESETS] = preset;
+    }
+  }
+
+  return filteredPresets;
+}
+
+export function getPythPresets(presets: ILISTING_PRESETS): ILISTING_PRESETS {
+  const filteredPresets = {} as ILISTING_PRESETS;
+
+  for (const [key, preset] of Object.entries(presets)) {
+    if (preset.preset_key !== "liab_5") {
+      filteredPresets[key as keyof ILISTING_PRESETS] = preset;
+    }
+  }
+
+  return filteredPresets;
+}
 
 export type PriceImpact = {
   symbol: string;
