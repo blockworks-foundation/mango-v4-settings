@@ -67,7 +67,7 @@ export declare const getMidPriceImpacts: (priceImpacts: PriceImpact[]) => MidPri
 export declare const getKeyForPriceImpact: (presets: ILISTING_PRESETS, priceImpactTargetAmount: number) => LISTING_PRESETS_KEY;
 export declare const getProposedKey: (priceImpactTargetAmount: number | undefined, isPythOracle: boolean) => LISTING_PRESETS_KEY;
 export declare const getProposedPreset: (priceImpactTargetAmount: number | undefined, isPythOracle: boolean) => LISTING_PRESET;
-export declare const getPresetWithAdjustedDepositLimit: (tier: LISTING_PRESET, tokenPrice: number) => LISTING_PRESET;
+export declare const getPresetWithAdjustedDepositLimit: (tier: LISTING_PRESET, tokenPrice: number, tokenDecimals: number) => LISTING_PRESET;
 export declare function getSwitchBoardPresets(presets: ILISTING_PRESETS): ILISTING_PRESETS;
 export declare function getPythPresets(presets: ILISTING_PRESETS): ILISTING_PRESETS;
 export type PriceImpact = {
