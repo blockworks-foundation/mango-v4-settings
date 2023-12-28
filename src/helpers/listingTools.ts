@@ -400,11 +400,13 @@ export const getProposedPreset = (
 export const getPresetWithAdjustedDepositLimit = (
   tier: LISTING_PRESET,
   tokenPrice: number,
+  tokenDecimals: number,
 ): LISTING_PRESET => {
   return {
     ...tier,
     depositLimit: tokenPrice
-      ? Math.ceil(tier.depositLimitNotional / tokenPrice)
+      ? Math.ceil(tier.depositLimitNotional / tokenPrice) *
+        Math.pow(10, tokenDecimals)
       : 0,
   };
 };
