@@ -201,6 +201,7 @@ export const LISTING_PRESETS: {
     oracleConfFilter: 1000,
     depositLimitNotional: 200000,
     oracle: ORACLE_TYPE.ALL,
+    reduceOnly: 2,
     oraclePriceBand: 19,
   },
 };
