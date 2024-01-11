@@ -199,7 +199,7 @@ export const LISTING_PRESETS: {
     preset_target_amount: 0,
     maxStalenessSlots: 1000,
     oracleConfFilter: 1000,
-    depositLimitNotional: 200000,
+    depositLimitNotional: 0,
     oracle: ORACLE_TYPE.ALL,
     reduceOnly: 2,
     oraclePriceBand: 19,
@@ -406,10 +406,11 @@ export const getPresetWithAdjustedDepositLimit = (
 ): LISTING_PRESET => {
   return {
     ...tier,
-    depositLimit: tokenPrice
-      ? Math.ceil(tier.depositLimitNotional / tokenPrice) *
-        Math.pow(10, tokenDecimals)
-      : 0,
+    depositLimit:
+      tokenPrice && tier.depositLimitNotional
+        ? Math.ceil(tier.depositLimitNotional / tokenPrice) *
+          Math.pow(10, tokenDecimals)
+        : 0,
   };
 };
 
