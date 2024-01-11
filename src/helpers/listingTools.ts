@@ -183,8 +183,8 @@ export const LISTING_PRESETS: {
   //should run untrusted, instruction preset should be named C
   UNTRUSTED: {
     ...asset_250p,
-    loanFeeRate: 0.075,
-    loanOriginationFeeRate: 0.0075,
+    loanFeeRate: 0.005,
+    loanOriginationFeeRate: 0.002,
     maintAssetWeight: 0,
     initAssetWeight: 0,
     maintLiabWeight: 1.4,
