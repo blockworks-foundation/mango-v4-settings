@@ -62,7 +62,7 @@ export declare const calculateMarketTradingParams: (basePrice: number, quotePric
 export declare const coinTiersToNames: {
     [key in LISTING_PRESETS_KEY]: string;
 };
-export declare const getPresetWithAdjustedNetBorrows: (tier: LISTING_PRESET, currentTotalDepositsInUsdc: number) => LISTING_PRESET;
+export declare const getPresetWithAdjustedNetBorrows: (tier: LISTING_PRESET, uiDeposits: number, uiPrice: number) => LISTING_PRESET;
 export declare const getMidPriceImpacts: (priceImpacts: PriceImpact[]) => MidPriceImpact[];
 export declare const getKeyForPriceImpact: (presets: ILISTING_PRESETS, priceImpactTargetAmount: number) => LISTING_PRESETS_KEY;
 export declare const getProposedKey: (priceImpactTargetAmount: number | undefined, isPythOracle: boolean) => LISTING_PRESETS_KEY;

@@ -341,7 +341,10 @@ export const getPresetWithAdjustedNetBorrows = (
 
   return {
     ...tier,
-    netBorrowLimitPerWindowQuote: newNetBorrowLimitPerWindowQuote,
+    netBorrowLimitPerWindowQuote: toNative(
+      newNetBorrowLimitPerWindowQuote,
+      6,
+    ).toNumber(),
   };
 };
 
