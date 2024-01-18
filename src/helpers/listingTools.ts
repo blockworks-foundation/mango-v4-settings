@@ -330,18 +330,18 @@ export const coinTiersToNames: {
 
 export const getPresetWithAdjustedNetBorrows = (
   tier: LISTING_PRESET,
-  currentTotalDepositsInUsdc: number,
+  uiDeposits: number,
+  uiPrice: number,
 ): LISTING_PRESET => {
-  const newNetBorrowLimitPerWindowQuote =
-    Math.round(currentTotalDepositsInUsdc / 3 / 1_000_000_000) * 1_000_000_000;
-  const minValue = toNative(10000, 6).toNumber();
+  const newNetBorrowLimitPerWindowQuote = Math.max(
+    10_000,
+    Math.min(uiDeposits * uiPrice, 300_000) / 3 +
+      Math.max(0, uiDeposits * uiPrice - 300_000) / 5,
+  );
 
   return {
     ...tier,
-    netBorrowLimitPerWindowQuote:
-      newNetBorrowLimitPerWindowQuote < minValue
-        ? minValue
-        : newNetBorrowLimitPerWindowQuote,
+    netBorrowLimitPerWindowQuote: newNetBorrowLimitPerWindowQuote,
   };
 };
 
