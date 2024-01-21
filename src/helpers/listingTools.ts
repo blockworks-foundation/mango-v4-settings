@@ -197,7 +197,7 @@ export const LISTING_PRESETS: {
     preset_name: "C",
     preset_key: "UNTRUSTED",
     preset_target_amount: 0,
-    maxStalenessSlots: 1000,
+    maxStalenessSlots: -1,
     oracleConfFilter: 1000,
     depositLimitNotional: 0,
     oracle: ORACLE_TYPE.ALL,
