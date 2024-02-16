@@ -184,7 +184,7 @@ export const LISTING_PRESETS: {
   UNTRUSTED: {
     ...asset_250p,
     loanFeeRate: 0.005,
-    loanOriginationFeeRate: 0.002,
+    loanOriginationFeeRate: 0.0075,
     maintAssetWeight: 0,
     initAssetWeight: 0,
     maintLiabWeight: 1.4,
