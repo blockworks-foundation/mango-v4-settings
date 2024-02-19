@@ -332,9 +332,10 @@ export const getPresetWithAdjustedNetBorrows = (
   tier: LISTING_PRESET,
   uiDeposits: number,
   uiPrice: number,
+  minNotionalValue = 10000,
 ): LISTING_PRESET => {
   const newNetBorrowLimitPerWindowQuote = Math.max(
-    10_000,
+    minNotionalValue,
     Math.min(uiDeposits * uiPrice, 300_000) / 3 +
       Math.max(0, uiDeposits * uiPrice - 300_000) / 5,
   );
