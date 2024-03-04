@@ -54,6 +54,8 @@ const asset_250p = {
   oraclePriceBand: 1,
   depositLimitNotional: 2000000,
   oracle: ORACLE_TYPE.PYTH,
+  zeroUtilRate: 0,
+  platformLiquidationFee: 0,
 };
 
 export type LISTING_PRESET = typeof asset_250p;
