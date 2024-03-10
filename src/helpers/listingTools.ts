@@ -56,6 +56,7 @@ const asset_250p = {
   oracle: ORACLE_TYPE.PYTH,
   zeroUtilRate: 0,
   platformLiquidationFee: 0,
+  collateralFeePerDay: 0,
 };
 
 export type LISTING_PRESET = typeof asset_250p;
