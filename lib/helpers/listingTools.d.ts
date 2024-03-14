@@ -45,6 +45,7 @@ declare const asset_250p: {
     zeroUtilRate: number;
     platformLiquidationFee: number;
     collateralFeePerDay: number;
+    disableAssetLiquidation: boolean;
 };
 export type LISTING_PRESET = typeof asset_250p;
 export type ILISTING_PRESETS = typeof LISTING_PRESETS;
