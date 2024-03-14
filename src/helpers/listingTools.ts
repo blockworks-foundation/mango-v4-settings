@@ -31,7 +31,7 @@ const asset_250p = {
   initAssetWeight: 0.8,
   maintLiabWeight: 1.1,
   initLiabWeight: 1.2,
-  liquidationFee: 0.05,
+  liquidationFee: 0.01,
   minVaultToDepositsRatio: 0.2,
   netBorrowLimitWindowSizeTs: 24 * 60 * 60,
   netBorrowLimitPerWindowQuote: toNative(250000, 6).toNumber(),
@@ -55,8 +55,9 @@ const asset_250p = {
   depositLimitNotional: 2000000,
   oracle: ORACLE_TYPE.PYTH,
   zeroUtilRate: 0,
-  platformLiquidationFee: 0,
+  platformLiquidationFee: 0.04,
   collateralFeePerDay: 0,
+  disableAssetLiquidation: false,
 };
 
 export type LISTING_PRESET = typeof asset_250p;
@@ -90,7 +91,7 @@ export const LISTING_PRESETS: {
     initAssetWeight: 0.5,
     maintLiabWeight: 1.2,
     initLiabWeight: 1.4,
-    liquidationFee: 0.1,
+    liquidationFee: 0.08,
     loanFeeRate: 0.02,
     netBorrowLimitPerWindowQuote: toNative(50000, 6).toNumber(),
     borrowWeightScaleStartQuote: toNative(50000, 6).toNumber(),
@@ -101,6 +102,7 @@ export const LISTING_PRESETS: {
     loanOriginationFeeRate: 0.002,
     oracle: ORACLE_TYPE.ALL,
     depositLimitNotional: 200000,
+    platformLiquidationFee: 0.02,
   },
   asset_10p: {
     ...asset_250p,
@@ -108,7 +110,7 @@ export const LISTING_PRESETS: {
     initAssetWeight: 0.25,
     maintLiabWeight: 1.25,
     initLiabWeight: 1.5,
-    liquidationFee: 0.1,
+    liquidationFee: 0.08,
     loanFeeRate: 0.03,
     netBorrowLimitPerWindowQuote: toNative(50000, 6).toNumber(),
     borrowWeightScaleStartQuote: toNative(20000, 6).toNumber(),
@@ -120,6 +122,7 @@ export const LISTING_PRESETS: {
     loanOriginationFeeRate: 0.003,
     oracle: ORACLE_TYPE.PYTH,
     depositLimitNotional: 80000,
+    platformLiquidationFee: 0.02,
   },
   liab_5p: {
     ...asset_250p,
@@ -129,7 +132,7 @@ export const LISTING_PRESETS: {
     loanFeeRate: 0.04,
     maintLiabWeight: 1.25,
     initLiabWeight: 1.5,
-    liquidationFee: 0.1,
+    liquidationFee: 0.06,
     netBorrowLimitPerWindowQuote: toNative(50000, 6).toNumber(),
     borrowWeightScaleStartQuote: toNative(20000, 6).toNumber(),
     depositWeightScaleStartQuote: toNative(20000, 6).toNumber(),
@@ -139,6 +142,7 @@ export const LISTING_PRESETS: {
     preset_target_amount: 5000,
     oracle: ORACLE_TYPE.PYTH,
     depositLimitNotional: 200000,
+    platformLiquidationFee: 0.04,
   },
   //Price impact on $1,000 swap lower then 1%
   liab_5: {
@@ -149,7 +153,6 @@ export const LISTING_PRESETS: {
     initAssetWeight: 0,
     maintLiabWeight: 1.3,
     initLiabWeight: 1.6,
-    liquidationFee: 0.1,
     netBorrowLimitPerWindowQuote: toNative(50000, 6).toNumber(),
     borrowWeightScaleStartQuote: toNative(20000, 6).toNumber(),
     depositWeightScaleStartQuote: toNative(20000, 6).toNumber(),
@@ -161,6 +164,8 @@ export const LISTING_PRESETS: {
     oracleConfFilter: 1000,
     oracle: ORACLE_TYPE.ALL,
     depositLimitNotional: 200000,
+    liquidationFee: 0.06,
+    platformLiquidationFee: 0.04,
   },
   liab_1: {
     ...asset_250p,
@@ -170,7 +175,8 @@ export const LISTING_PRESETS: {
     initAssetWeight: 0,
     maintLiabWeight: 1.4,
     initLiabWeight: 1.8,
-    liquidationFee: 0.1,
+    liquidationFee: 0.06,
+    platformLiquidationFee: 0.04,
     netBorrowLimitPerWindowQuote: toNative(15000, 6).toNumber(),
     borrowWeightScaleStartQuote: toNative(5000, 6).toNumber(),
     depositWeightScaleStartQuote: toNative(5000, 6).toNumber(),
@@ -192,7 +198,8 @@ export const LISTING_PRESETS: {
     initAssetWeight: 0,
     maintLiabWeight: 1.4,
     initLiabWeight: 1.8,
-    liquidationFee: 0.2,
+    liquidationFee: 0.06,
+    platformLiquidationFee: 0.04,
     netBorrowLimitPerWindowQuote: toNative(5000, 6).toNumber(),
     borrowWeightScaleStartQuote: toNative(5000, 6).toNumber(),
     depositWeightScaleStartQuote: toNative(5000, 6).toNumber(),
@@ -206,6 +213,7 @@ export const LISTING_PRESETS: {
     oracle: ORACLE_TYPE.ALL,
     reduceOnly: 2,
     oraclePriceBand: 19,
+    disableAssetLiquidation: true,
   },
 };
 

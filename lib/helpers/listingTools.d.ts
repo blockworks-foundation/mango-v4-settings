@@ -42,6 +42,9 @@ declare const asset_250p: {
     oraclePriceBand: number;
     depositLimitNotional: number;
     oracle: ORACLE_TYPE;
+    zeroUtilRate: number;
+    platformLiquidationFee: number;
+    collateralFeePerDay: number;
 };
 export type LISTING_PRESET = typeof asset_250p;
 export type ILISTING_PRESETS = typeof LISTING_PRESETS;
