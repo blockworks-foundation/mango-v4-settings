@@ -3,8 +3,8 @@ declare enum ORACLE_TYPE {
     SWITCHBOARD = 1,
     ALL = 2
 }
-export type LISTING_PRESETS_KEY = "asset_250p" | "asset_100" | "asset_20" | "asset_10p" | "liab_5p" | "liab_5" | "liab_1" | "UNTRUSTED";
-declare const asset_250p: {
+export type LISTING_PRESETS_KEY = "asset_5000" | "asset_250" | "asset_100" | "asset_20" | "asset_10" | "liab_5" | "liab_3" | "liab_1" | "UNTRUSTED";
+declare const asset_5000: {
     maxStalenessSlots: number | null;
     oracleConfFilter: number;
     adjustmentFactor: number;
@@ -47,7 +47,7 @@ declare const asset_250p: {
     collateralFeePerDay: number;
     disableAssetLiquidation: boolean;
 };
-export type LISTING_PRESET = typeof asset_250p;
+export type LISTING_PRESET = typeof asset_5000;
 export type ILISTING_PRESETS = typeof LISTING_PRESETS;
 export declare const LISTING_PRESETS: {
     [key in LISTING_PRESETS_KEY]: LISTING_PRESET;

@@ -400,11 +400,8 @@ export const getKeyForPriceImpact = (
 
 export const getProposedKey = (
   priceImpactTargetAmount: number | undefined,
-  isPythOracle: boolean,
 ): LISTING_PRESETS_KEY => {
-  const filtredPresets = isPythOracle
-    ? getPythPresets(LISTING_PRESETS)
-    : getSwitchBoardPresets(LISTING_PRESETS);
+  const filtredPresets = LISTING_PRESETS;
   const liquidityTier =
     priceImpactTargetAmount !== undefined
       ? getKeyForPriceImpact(filtredPresets, priceImpactTargetAmount)
@@ -415,9 +412,8 @@ export const getProposedKey = (
 
 export const getProposedPreset = (
   priceImpactTargetAmount: number | undefined,
-  isPythOracle: boolean,
 ): LISTING_PRESET => {
-  return LISTING_PRESETS[getProposedKey(priceImpactTargetAmount, isPythOracle)];
+  return LISTING_PRESETS[getProposedKey(priceImpactTargetAmount)];
 };
 
 export const getPresetWithAdjustedDepositLimit = (
@@ -434,32 +430,6 @@ export const getPresetWithAdjustedDepositLimit = (
         : 0,
   };
 };
-
-export function getSwitchBoardPresets(
-  presets: ILISTING_PRESETS,
-): ILISTING_PRESETS {
-  const filteredPresets = {} as ILISTING_PRESETS;
-
-  for (const [key, preset] of Object.entries(presets)) {
-    if (preset.oracle !== ORACLE_TYPE.PYTH) {
-      filteredPresets[key as keyof ILISTING_PRESETS] = preset;
-    }
-  }
-
-  return filteredPresets;
-}
-
-export function getPythPresets(presets: ILISTING_PRESETS): ILISTING_PRESETS {
-  const filteredPresets = {} as ILISTING_PRESETS;
-
-  for (const [key, preset] of Object.entries(presets)) {
-    if (preset.preset_key !== "liab_5") {
-      filteredPresets[key as keyof ILISTING_PRESETS] = preset;
-    }
-  }
-
-  return filteredPresets;
-}
 
 export type PriceImpact = {
   symbol: string;
