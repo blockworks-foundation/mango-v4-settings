@@ -98,8 +98,8 @@ export const LISTING_PRESETS: {
   //Price impact on $20,000 swap lower then 1%
   asset_20: {
     ...asset_5000,
-    maintAssetWeight: 0.75,
-    initAssetWeight: 0.5,
+    maintAssetWeight: 0.8,
+    initAssetWeight: 0.66,
     maintLiabWeight: 1.2,
     initLiabWeight: 1.4,
     liquidationFee: 0.02,
@@ -116,8 +116,8 @@ export const LISTING_PRESETS: {
   },
   asset_10: {
     ...asset_5000,
-    maintAssetWeight: 0.5,
-    initAssetWeight: 0.25,
+    maintAssetWeight: 0.75,
+    initAssetWeight: 0.5,
     maintLiabWeight: 1.25,
     initLiabWeight: 1.5,
     liquidationFee: 0.02,
