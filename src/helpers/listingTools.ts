@@ -444,3 +444,79 @@ export type MidPriceImpact = Omit<
   PriceImpact,
   "side" | "min_price_impact_percent" | "max_price_impact_percent"
 >;
+
+export const tierToSwapValue: { [key in LISTING_PRESETS_KEY]?: string } = {
+  asset_5000: "500000",
+  asset_250: "25000",
+  asset_100: "10000",
+  asset_20: "2000",
+  asset_10: "1000",
+  liab_5: "500",
+  liab_3: "500",
+  liab_1: "100",
+  UNTRUSTED: "100",
+};
+
+export const tierSettings: {
+  [key in LISTING_PRESETS_KEY]?: {
+    fundAmount: number;
+    batchSize: number;
+    minRequiredOracleResults: number;
+    minUpdateDelaySeconds: number;
+  };
+} = {
+  asset_5000: {
+    fundAmount: 6.5,
+    minRequiredOracleResults: 2,
+    minUpdateDelaySeconds: 60,
+    batchSize: 5,
+  },
+  asset_250: {
+    fundAmount: 6.5,
+    minRequiredOracleResults: 2,
+    minUpdateDelaySeconds: 60,
+    batchSize: 5,
+  },
+  asset_100: {
+    fundAmount: 6.5,
+    minRequiredOracleResults: 2,
+    minUpdateDelaySeconds: 60,
+    batchSize: 5,
+  },
+  asset_20: {
+    fundAmount: 3.3,
+    minRequiredOracleResults: 1,
+    minUpdateDelaySeconds: 60,
+    batchSize: 2,
+  },
+  asset_10: {
+    fundAmount: 3.3,
+    minRequiredOracleResults: 1,
+    minUpdateDelaySeconds: 60,
+    batchSize: 2,
+  },
+  liab_5: {
+    fundAmount: 3.3,
+    minRequiredOracleResults: 1,
+    minUpdateDelaySeconds: 60,
+    batchSize: 2,
+  },
+  liab_3: {
+    fundAmount: 3.3,
+    minRequiredOracleResults: 1,
+    minUpdateDelaySeconds: 60,
+    batchSize: 2,
+  },
+  liab_1: {
+    fundAmount: 3.3,
+    minRequiredOracleResults: 1,
+    minUpdateDelaySeconds: 60,
+    batchSize: 2,
+  },
+  UNTRUSTED: {
+    fundAmount: 0.34,
+    batchSize: 2,
+    minRequiredOracleResults: 1,
+    minUpdateDelaySeconds: 600,
+  },
+};
