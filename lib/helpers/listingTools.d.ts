@@ -81,4 +81,15 @@ export type PriceImpact = {
     max_price_impact_percent: number;
 };
 export type MidPriceImpact = Omit<PriceImpact, "side" | "min_price_impact_percent" | "max_price_impact_percent">;
+export declare const tierToSwapValue: {
+    [key in LISTING_PRESETS_KEY]?: string;
+};
+export declare const tierSettings: {
+    [key in LISTING_PRESETS_KEY]?: {
+        fundAmount: number;
+        batchSize: number;
+        minRequiredOracleResults: number;
+        minUpdateDelaySeconds: number;
+    };
+};
 export {};

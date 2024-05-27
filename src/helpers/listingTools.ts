@@ -445,7 +445,9 @@ export type MidPriceImpact = Omit<
   "side" | "min_price_impact_percent" | "max_price_impact_percent"
 >;
 
-export const tierToSwapValue: { [key in LISTING_PRESETS_KEY]?: string } = {
+export const tierToSwitchboardJobSwapValue: {
+  [key in LISTING_PRESETS_KEY]?: string;
+} = {
   asset_5000: "500000",
   asset_250: "25000",
   asset_100: "10000",
@@ -457,7 +459,7 @@ export const tierToSwapValue: { [key in LISTING_PRESETS_KEY]?: string } = {
   UNTRUSTED: "100",
 };
 
-export const tierSettings: {
+export const tierSwitchboardSettings: {
   [key in LISTING_PRESETS_KEY]?: {
     fundAmount: number;
     batchSize: number;
